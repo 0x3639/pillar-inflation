@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+.ruff_cache/
+.mypy_cache/
+dist/
+build/
+python/out/
+
+# Node / Vite
+node_modules/
+web/dist/
+*.tsbuildinfo
+.vite/
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# uv
+.python-version
+uv.lock

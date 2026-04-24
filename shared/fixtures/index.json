@@ -1,0 +1,24 @@
+{
+  "fixtures": [
+    "baseline_1to10",
+    "baseline_1to3",
+    "baseline_1to4",
+    "baseline_1to5",
+    "baseline_1to6",
+    "baseline_1to7",
+    "baseline_1to8",
+    "baseline_1to9",
+    "delegation_heavy_swap10",
+    "delegation_off_lock_1to7",
+    "dilute_growth_swap10",
+    "dilute_swap10",
+    "lock_1to10",
+    "lock_1to3",
+    "lock_1to5",
+    "lock_1to7",
+    "long_horizon_swap7",
+    "low_swap_1to1",
+    "operator_keeps_all_swap10",
+    "promote_max1_swap10"
+  ]
+}
