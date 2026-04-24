@@ -1,5 +1,8 @@
 # Pillar Inflation Simulator
 
+[![CI](https://github.com/0x3639/pillar-inflation/actions/workflows/ci.yml/badge.svg)](https://github.com/0x3639/pillar-inflation/actions/workflows/ci.yml)
+[![Deploy Pages](https://github.com/0x3639/pillar-inflation/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/0x3639/pillar-inflation/actions/workflows/deploy-pages.yml)
+
 Simulates whether a single operator (Zenon.org) can, over time, accumulate enough Zenon Network pillars to dominate the top-30 producer set or gain majority governance weight on Accelerator-Z.
 
 - **Interactive site:** <https://0x3639.github.io/pillar-inflation/>
