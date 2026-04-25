@@ -26,7 +26,7 @@ class SimParams:
 
     # Run
     months: int = 120
-    swap_rate: float = 5.0
+    swap_rate: float = 8.0
 
     # Strategy
     strategy_name: StrategyName = "lock_threshold"

@@ -66,7 +66,7 @@ export const DEFAULT_PARAMS: SimParams = {
   start_znn: 0,
   start_qsr: 0,
   months: 120,
-  swap_rate: 5,
+  swap_rate: 8,
   strategy_name: "lock_threshold",
   promote_to_top30: false,
   max_promotions_per_year: 1,
