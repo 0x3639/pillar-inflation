@@ -270,7 +270,7 @@ export function ParamsPanel() {
           onChange={(v) => setParam("network_growth_per_year", v)}
           min={0}
           max={50}
-          step={0.5}
+          step={1}
           slider
           hint={`${params.network_growth_per_year} / year — dilutes bottom pool`}
         />

@@ -61,6 +61,7 @@ export function simulate(params: SimParams, strategy?: Strategy): MonthRecord[] 
       total_pillars: operator.top30 + operator.bottom,
       znn_balance_end: operator.znn_balance,
       qsr_balance_end: operator.qsr_balance,
+      qsr_peak_month: effects.qsr_peak,
       znn_self_delegated_end: operator.znn_self_delegated,
       znn_earned_month: earned,
       delegation_znn_month: delegationMonthly,

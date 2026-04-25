@@ -21,6 +21,7 @@ export interface MonthRecord {
   total_pillars: number;
   znn_balance_end: number;
   qsr_balance_end: number;
+  qsr_peak_month: number;
   znn_self_delegated_end: number;
   znn_earned_month: number;
   delegation_znn_month: number;

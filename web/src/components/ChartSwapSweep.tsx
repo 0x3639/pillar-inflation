@@ -44,7 +44,7 @@ export function ChartSwapSweep({ series, yKey, ylabel }: Props) {
 
   return (
     <ResponsiveContainer width="100%" height={360}>
-      <LineChart data={data} margin={{ top: 10, right: 16, left: 0, bottom: 0 }}>
+      <LineChart data={data} margin={{ top: 10, right: 16, left: 0, bottom: 16 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
         <XAxis
           dataKey="month"
@@ -62,7 +62,10 @@ export function ChartSwapSweep({ series, yKey, ylabel }: Props) {
           }}
           labelFormatter={(m: number) => `Month ${m} (year ${((m - 1) / 12 + 1) | 0})`}
         />
-        <Legend wrapperStyle={{ color: "var(--text)", fontSize: 12 }} />
+        <Legend
+          verticalAlign="bottom"
+          wrapperStyle={{ color: "var(--text)", fontSize: 12, bottom: 0 }}
+        />
         {series.map((s, i) => (
           <Line
             key={s.rate}

@@ -75,8 +75,8 @@ export function ChartInflationShare({ params, records }: Props) {
           </span>
         </span>
       </div>
-      <ResponsiveContainer width="100%" height={260}>
-        <LineChart data={data} margin={{ top: 10, right: 16, left: 8, bottom: 24 }}>
+      <ResponsiveContainer width="100%" height={280}>
+        <LineChart data={data} margin={{ top: 10, right: 16, left: 8, bottom: 32 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
           <XAxis
             dataKey="month"
@@ -114,7 +114,10 @@ export function ChartInflationShare({ params, records }: Props) {
             }
             formatter={(v: number, name: string) => [`${v.toFixed(3)}%`, name]}
           />
-          <Legend wrapperStyle={{ color: "var(--text)", fontSize: 12 }} />
+          <Legend
+            verticalAlign="bottom"
+            wrapperStyle={{ color: "var(--text)", fontSize: 12, bottom: 0 }}
+          />
           <Line
             type="monotone"
             dataKey="znn_share"

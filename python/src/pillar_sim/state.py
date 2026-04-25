@@ -41,6 +41,7 @@ class MonthRecord:
     total_pillars: int
     znn_balance_end: float
     qsr_balance_end: float
+    qsr_peak_month: float  # post-swap, pre-launch peak QSR; equals qsr_balance_end on non-launch months
     znn_self_delegated_end: float
     znn_earned_month: float
     delegation_znn_month: float

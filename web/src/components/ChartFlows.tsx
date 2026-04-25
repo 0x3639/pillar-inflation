@@ -75,7 +75,7 @@ export function ChartFlows({ records }: Props) {
         </span>
       </div>
       <ResponsiveContainer width="100%" height={320}>
-        <LineChart data={data} margin={{ top: 10, right: 56, left: 8, bottom: 24 }}>
+        <LineChart data={data} margin={{ top: 10, right: 56, left: 8, bottom: 32 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
           <XAxis
             dataKey="month"
@@ -127,7 +127,10 @@ export function ChartFlows({ records }: Props) {
             }
             formatter={(v: number) => fmt(v)}
           />
-          <Legend wrapperStyle={{ color: "var(--text)", fontSize: 12 }} />
+          <Legend
+            verticalAlign="bottom"
+            wrapperStyle={{ color: "var(--text)", fontSize: 12, bottom: 0 }}
+          />
           <Line
             yAxisId="znn"
             type="monotone"

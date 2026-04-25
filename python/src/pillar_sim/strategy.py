@@ -20,6 +20,10 @@ class MonthlyEffects:
     qsr_spent: float = 0.0
     launches: int = 0
     promotions: int = 0
+    # Snapshot of operator.qsr_balance taken AFTER the monthly swap but BEFORE
+    # any launches are paid for. Equals qsr_balance_end on non-launch months.
+    # Strategies must populate this; engine reads it for MonthRecord.
+    qsr_peak: float = 0.0
 
 
 class Strategy(Protocol):
@@ -97,6 +101,8 @@ class LockThresholdStrategy:
             effects.znn_sold += surplus
             effects.qsr_acquired += surplus * params.swap_rate
 
+        effects.qsr_peak = operator.qsr_balance
+
         # Launch as many pillars as affordable this month.
         while (
             operator.qsr_balance >= operator.next_qsr_cost
@@ -130,6 +136,7 @@ class SellAllYearlyStrategy:
     ) -> MonthlyEffects:
         effects = MonthlyEffects()
         if month % 12 != 0:
+            effects.qsr_peak = operator.qsr_balance
             return effects  # accumulate silently
 
         znn_bal = operator.znn_balance
@@ -160,6 +167,8 @@ class SellAllYearlyStrategy:
         operator.qsr_balance += qsr_acquired
         effects.znn_sold += znn_to_sell
         effects.qsr_acquired += qsr_acquired
+
+        effects.qsr_peak = operator.qsr_balance
 
         for _ in range(k):
             _try_launch(params, operator, effects)

@@ -20,15 +20,24 @@ export function ChartBalances({ records }: Props) {
     month: r.month,
     znn: r.znn_balance_end,
     qsr: r.qsr_balance_end,
+    qsr_peak: r.qsr_peak_month,
     self_del: r.znn_self_delegated_end,
     launched: r.launches_this_month > 0,
   }));
 
   const launchEvents = records
     .filter((r) => r.launches_this_month > 0)
-    .map((r) => ({ month: r.month, znn: r.znn_balance_end, qsr: r.qsr_balance_end }));
+    .map((r) => ({
+      month: r.month,
+      znn: r.znn_balance_end,
+      qsr: r.qsr_balance_end,
+      qsr_peak: r.qsr_peak_month,
+    }));
 
   const anySelfDel = records.some((r) => r.znn_self_delegated_end > 0);
+  const anyPeakDiff = records.some(
+    (r) => Math.abs(r.qsr_peak_month - r.qsr_balance_end) > 1,
+  );
 
   return (
     <div>
@@ -47,6 +56,11 @@ export function ChartBalances({ records }: Props) {
         <span>
           <strong style={{ color: "var(--bottom)" }}>● QSR</strong> balance (right axis)
         </span>
+        {anyPeakDiff ? (
+          <span>
+            <strong style={{ color: "var(--accent)" }}>● QSR peak</strong> (post-swap, pre-launch)
+          </span>
+        ) : null}
         {anySelfDel ? (
           <span>
             <strong style={{ color: "var(--warn)" }}>● Self-delegated ZNN</strong> (left axis,
@@ -58,7 +72,7 @@ export function ChartBalances({ records }: Props) {
         </span>
       </div>
       <ResponsiveContainer width="100%" height={320}>
-        <LineChart data={data} margin={{ top: 10, right: 56, left: 8, bottom: 24 }}>
+        <LineChart data={data} margin={{ top: 10, right: 56, left: 8, bottom: 32 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
           <XAxis
             dataKey="month"
@@ -113,7 +127,10 @@ export function ChartBalances({ records }: Props) {
               name,
             ]}
           />
-          <Legend wrapperStyle={{ color: "var(--text)", fontSize: 12 }} />
+          <Legend
+            verticalAlign="bottom"
+            wrapperStyle={{ color: "var(--text)", fontSize: 12, bottom: 0 }}
+          />
           <Line
             yAxisId="znn"
             type="linear"
@@ -149,6 +166,19 @@ export function ChartBalances({ records }: Props) {
             activeDot={{ r: 5 }}
             isAnimationActive={false}
           />
+          {anyPeakDiff ? (
+            <Line
+              yAxisId="qsr"
+              type="linear"
+              dataKey="qsr_peak"
+              name="QSR peak (pre-launch)"
+              stroke="var(--accent)"
+              strokeWidth={1.5}
+              strokeDasharray="3 3"
+              dot={false}
+              isAnimationActive={false}
+            />
+          ) : null}
           {launchEvents.map((e) => (
             <ReferenceDot
               key={`znn-${e.month}`}
@@ -186,7 +216,9 @@ export function ChartBalances({ records }: Props) {
       >
         ZNN accumulates to 15,000 (the lock reserve), then surplus is sold monthly for QSR. At
         each green-dot launch, 15,000 ZNN is locked (balance drops) and <em>next_qsr_cost</em>{" "}
-        QSR is burned. Any residual carries to next month.
+        QSR is burned. The dashed <em>QSR peak</em> line shows the post-swap, pre-launch
+        balance — on launch months it spikes above the launch cost before the burn drops it back
+        to the residual.
       </div>
     </div>
   );

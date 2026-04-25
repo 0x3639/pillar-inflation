@@ -7,6 +7,7 @@ export interface MonthlyEffects {
   qsr_spent: number;
   launches: number;
   promotions: number;
+  qsr_peak: number;
 }
 
 export interface Strategy {
@@ -19,7 +20,7 @@ export interface Strategy {
 }
 
 function emptyEffects(): MonthlyEffects {
-  return { znn_sold: 0, qsr_acquired: 0, qsr_spent: 0, launches: 0, promotions: 0 };
+  return { znn_sold: 0, qsr_acquired: 0, qsr_spent: 0, launches: 0, promotions: 0, qsr_peak: 0 };
 }
 
 function effectiveTop30Cap(params: SimParams): number {
@@ -80,6 +81,8 @@ export class LockThresholdStrategy implements Strategy {
       effects.qsr_acquired += surplus * params.swap_rate;
     }
 
+    effects.qsr_peak = operator.qsr_balance;
+
     while (
       operator.qsr_balance >= operator.next_qsr_cost &&
       operator.znn_balance >= params.znn_lock_per_pillar
@@ -103,7 +106,10 @@ export class SellAllYearlyStrategy implements Strategy {
     month: number,
   ): MonthlyEffects {
     const effects = emptyEffects();
-    if (month % 12 !== 0) return effects;
+    if (month % 12 !== 0) {
+      effects.qsr_peak = operator.qsr_balance;
+      return effects;
+    }
 
     const znnBal = operator.znn_balance;
     const nextCost = operator.next_qsr_cost;
@@ -130,6 +136,8 @@ export class SellAllYearlyStrategy implements Strategy {
     operator.qsr_balance += qsrAcquired;
     effects.znn_sold += znnToSell;
     effects.qsr_acquired += qsrAcquired;
+
+    effects.qsr_peak = operator.qsr_balance;
 
     for (let i = 0; i < k; i++) {
       tryLaunch(params, operator, effects);
